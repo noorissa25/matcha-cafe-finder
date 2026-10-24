@@ -10,12 +10,15 @@ import { cafeSchema, fieldErrors, formToObject, tastingSchema, type FieldErrors 
 
 export interface FormState {
   errors?: FieldErrors;
+  /** What was submitted, so fields can be refilled after React resets the form. */
+  values?: Record<string, string | undefined>;
   ok?: boolean;
 }
 
 export async function createCafe(_prev: FormState, form: FormData): Promise<FormState> {
-  const parsed = cafeSchema.safeParse(formToObject(form));
-  if (!parsed.success) return { errors: fieldErrors(parsed.error) };
+  const values = formToObject(form);
+  const parsed = cafeSchema.safeParse(values);
+  if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
 
   const cafe = await prisma.cafe.create({ data: parsed.data });
   revalidatePath("/", "layout");
@@ -23,11 +26,12 @@ export async function createCafe(_prev: FormState, form: FormData): Promise<Form
 }
 
 export async function addTasting(_prev: FormState, form: FormData): Promise<FormState> {
-  const parsed = tastingSchema.safeParse(formToObject(form));
-  if (!parsed.success) return { errors: fieldErrors(parsed.error) };
+  const values = formToObject(form);
+  const parsed = tastingSchema.safeParse(values);
+  if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
 
   const exists = await prisma.cafe.count({ where: { id: parsed.data.cafeId } });
-  if (!exists) return { errors: { form: "That cafe no longer exists." } };
+  if (!exists) return { errors: { form: "That cafe no longer exists." }, values };
 
   await prisma.tasting.create({ data: parsed.data });
   revalidatePath("/", "layout");

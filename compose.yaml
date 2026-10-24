@@ -1,0 +1,16 @@
+# Optional local PostgreSQL. Start with `docker compose up -d`, then set
+# DATABASE_URL="postgresql://postgres:postgres@localhost:5432/matcha_cafe_finder" in .env
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: matcha_cafe_finder
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

@@ -14,8 +14,11 @@ export const cafeSchema = z
     name: z.string().trim().min(1, "Name is required").max(80),
     neighborhood: z.string().trim().min(1, "Neighborhood is required").max(60),
     address: z.string().trim().max(160).default(""),
-    lat: z.coerce.number().min(-90).max(90),
-    lng: z.coerce.number().min(-180).max(180),
+    lat: z.coerce.number("Enter a latitude").min(-90, "Latitude is between -90 and 90").max(90, "Latitude is between -90 and 90"),
+    lng: z.coerce
+      .number("Enter a longitude")
+      .min(-180, "Longitude is between -180 and 180")
+      .max(180, "Longitude is between -180 and 180"),
     description: z.string().trim().max(600).default(""),
     tags: z
       .string()

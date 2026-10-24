@@ -4,10 +4,10 @@
 //
 // Usage: node scripts/db.mjs <prisma args...>   e.g. node scripts/db.mjs db push
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-process.loadEnvFile?.(".env");
+if (existsSync(".env")) process.loadEnvFile(".env");
 
 const url = process.env.DATABASE_URL ?? "";
 let schema = "prisma/schema.prisma";
