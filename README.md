@@ -93,6 +93,12 @@ npm run db:setup            # create tables and load the fictional sample data
 npm run dev                 # http://localhost:3000
 ```
 
+Or all of the above in one go (it keeps an existing `.env` and replaces the data with the sample cafés):
+
+```bash
+npm run preview             # http://localhost:3100
+```
+
 ### Using PostgreSQL instead
 
 ```bash
@@ -114,6 +120,7 @@ ANTHROPIC_API_KEY="sk-ant-..."
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | Start the dev server |
+| `npm run preview` | First-run helper: create `.env` if missing, install, set up the database, start dev on port 3100 |
 | `npm run build` / `npm start` | Production build and server |
 | `npm test` | Run the Vitest suite |
 | `npm run lint` | ESLint |
@@ -146,3 +153,7 @@ src/
 - Locations are entered by clicking the map or typing coordinates; there is no address search (geocoding) yet.
 - No photo uploads.
 - The recommender only knows what you write. Short notes like "good" give it little to work with.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
