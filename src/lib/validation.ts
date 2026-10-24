@@ -57,6 +57,16 @@ export function formToObject(form: FormData): Record<string, string | undefined>
 
 export type FieldErrors = Partial<Record<string, string>>;
 
+/** Result of a form action, shared by the Server Actions and the static demo. */
+export interface FormState {
+  errors?: FieldErrors;
+  /** What was submitted, so fields can be refilled after React resets the form. */
+  values?: Record<string, string | undefined>;
+  ok?: boolean;
+}
+
+export type FormAction = (prev: FormState, form: FormData) => Promise<FormState>;
+
 export function fieldErrors(error: z.ZodError): FieldErrors {
   const out: FieldErrors = {};
   for (const issue of error.issues) {

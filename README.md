@@ -2,6 +2,8 @@
 
 A small full-stack app for keeping track of cafés: log where you went, rate the matcha and the coffee separately, write tasting notes, see everything on a map, and get a ranked, explained answer to "what should I try next?"
 
+**Live demo: https://noorissa25.github.io/matcha-cafe-finder/** (fictional sample cafés; anything you add stays in your own browser)
+
 ![Café list](docs/screenshots/cafes.jpg)
 
 | Recommendations | Map |
@@ -39,6 +41,16 @@ The scoring is plain TypeScript in [`src/lib/recommend`](src/lib/recommend), wit
 4. **Explanation.** The terms that moved the score most in each direction become the reasons, for example *"Shares what you rated highly: whisked to order, ceremonial grade, umami."* Words that belong to a matching tag are folded into it so the reasons do not repeat themselves.
 
 Generic words that every café shares ("matcha", "coffee", "latte", "cafe" and so on) are ignored, so a bad matcha latte does not teach the model to avoid the word "matcha". With no non-neutral ratings yet, it falls back to an alphabetical list and asks for a few ratings.
+
+## Live demo
+
+The demo on GitHub Pages is a static build of the same app. GitHub Pages cannot run a server or a database, so `npm run build:demo` (`NEXT_PUBLIC_DEMO=1`) changes three things:
+
+- **Routes:** Next.js only picks up the `*.demo.tsx` route files. They render the same shared views in [`src/components/views`](src/components/views) but read data from [`src/lib/demo/store.ts`](src/lib/demo/store.ts) instead of Prisma.
+- **Data:** the store starts from the same fictional sample cafés as the database seed ([`src/lib/sample-data.ts`](src/lib/sample-data.ts)). Cafés and tastings a visitor adds are validated with the same zod schemas and saved to that browser's `localStorage`. "Reset demo" in the banner clears them.
+- **Output:** a plain HTML export under `/matcha-cafe-finder`. A café page is `/cafe?id=…` instead of `/cafes/[id]`, because a static export cannot prerender pages for cafés added later.
+
+The recommender is pure TypeScript, so it runs in the browser unchanged. The demo has no AI note and no JSON API. The [`publish demo`](.github/workflows/pages.yml) workflow rebuilds it and pushes it to the `gh-pages` branch on every push to `main`.
 
 ## Architecture
 
@@ -86,7 +98,7 @@ flowchart LR
 | AI note | Anthropic TypeScript SDK, behind an env var | Additive only: the ranking never depends on it, and any error falls back to the built-in reasons. |
 | Styling | Tailwind CSS v4 | Theme tokens as CSS variables, with a dark mode. |
 | Tests | Vitest | Fast unit tests for the recommender and validation. |
-| CI | GitHub Actions | Lint, typecheck and tests, then schema push, seed and a production build against a real PostgreSQL service. |
+| CI | GitHub Actions | Lint, typecheck and tests, then schema push, seed and a production build against a real PostgreSQL service. A second workflow publishes the static demo to GitHub Pages. |
 
 ## Running locally
 
@@ -130,6 +142,9 @@ ANTHROPIC_API_KEY="sk-ant-..."
 | `npm run dev` | Start the dev server |
 | `npm run preview` | First-run helper: create `.env` if missing, install, set up the database, start dev on port 3100 |
 | `npm run build` / `npm start` | Production build and server |
+| `npm run dev:demo` | Run the static demo variant in dev mode (port 3101) |
+| `npm run build:demo` | Build the static GitHub Pages demo into `out/` |
+| `npm run preview:demo` | Build the demo and serve it at http://localhost:3102/matcha-cafe-finder/ |
 | `npm test` | Run the Vitest suite |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Generate Next.js route types, then `tsc --noEmit` |
@@ -144,11 +159,17 @@ prisma/
   schema.prisma        PostgreSQL schema (SQLite copy is generated)
   seed.ts              fictional sample cafés and tastings
 scripts/db.mjs         runs Prisma against the right provider
+scripts/serve-demo.mjs serves the static demo locally under /matcha-cafe-finder
 src/
   app/                 routes: /, /map, /cafes/new, /cafes/[id], /recommend, /api/recommendations
+                       (*.demo.tsx files are the static demo's routes)
   components/          cards, forms, rating chips, Leaflet map
+    views/             page UI shared by the full app and the demo
   lib/
     recommend/         scoring, text utilities and their tests
+    demo/              browser-only data store for the static demo
+    sample-data.ts     fictional cafés used by the seed and the demo
+    cafes.ts           café summaries and sorting (no database access)
     actions.ts         Server Actions
     data.ts            database reads
     validation.ts      zod schemas
@@ -157,7 +178,7 @@ src/
 
 ## Limitations and next steps
 
-- Single user, no accounts. The Server Actions have no auth check, so add authentication before deploying publicly.
+- Single user, no accounts. The Server Actions have no auth check, so add authentication before deploying the full app publicly. (The GitHub Pages demo has no server, so each visitor only changes their own browser's copy.)
 - Locations are entered by clicking the map or typing coordinates; there is no address search (geocoding) yet.
 - No photo uploads.
 - The recommender only knows what you write. Short notes like "good" give it little to work with.

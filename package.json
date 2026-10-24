@@ -15,7 +15,10 @@
     "db:seed": "node --env-file-if-exists=.env --import tsx prisma/seed.ts",
     "db:setup": "npm run db:push && npm run db:seed",
     "postinstall": "node scripts/db.mjs generate",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs",
+    "build:demo": "NEXT_PUBLIC_DEMO=1 next build",
+    "dev:demo": "NEXT_PUBLIC_DEMO=1 next dev --port 3101",
+    "preview:demo": "npm run build:demo && node scripts/serve-demo.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.3.0",

@@ -6,14 +6,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "./db";
-import { cafeSchema, fieldErrors, formToObject, tastingSchema, type FieldErrors } from "./validation";
-
-export interface FormState {
-  errors?: FieldErrors;
-  /** What was submitted, so fields can be refilled after React resets the form. */
-  values?: Record<string, string | undefined>;
-  ok?: boolean;
-}
+import { cafeSchema, fieldErrors, formToObject, tastingSchema, type FormState } from "./validation";
 
 export async function createCafe(_prev: FormState, form: FormData): Promise<FormState> {
   const values = formToObject(form);

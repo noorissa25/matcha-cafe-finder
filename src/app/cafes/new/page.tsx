@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { CafeForm } from "@/components/forms";
+import { NewCafeIntro } from "@/components/views/new-cafe";
+import { createCafe } from "@/lib/actions";
 
 export const metadata: Metadata = { title: "Add a café" };
 
 export default function NewCafePage() {
   return (
     <div className="space-y-6">
-      <section className="space-y-2">
-        <h1 className="font-display text-4xl font-semibold tracking-tight">Add a café</h1>
-        <p className="text-muted">Somewhere you went, or somewhere on your list.</p>
-      </section>
-      <CafeForm />
+      <NewCafeIntro />
+      <CafeForm action={createCafe} />
     </div>
   );
 }

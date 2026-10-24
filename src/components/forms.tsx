@@ -1,7 +1,10 @@
 "use client";
 
+// The forms take their action as a prop: Server Actions in the full app, browser
+// functions in the static demo (see src/lib/demo).
+
 import { useActionState, useState } from "react";
-import { addTasting, createCafe, type FormState } from "@/lib/actions";
+import type { FormAction, FormState } from "@/lib/validation";
 import { LocationPicker } from "./map";
 
 const input =
@@ -40,8 +43,8 @@ function Submit({ pending, children }: { pending: boolean; children: React.React
   );
 }
 
-export function CafeForm() {
-  const [state, action, pending] = useActionState<FormState, FormData>(createCafe, {});
+export function CafeForm({ action: submit }: { action: FormAction }) {
+  const [state, action, pending] = useActionState<FormState, FormData>(submit, {});
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
   const v = state.values ?? {};
@@ -118,17 +121,19 @@ export function CafeForm() {
 }
 
 export function TastingForm({
+  action: submit,
   cafeId,
   servesMatcha,
   servesCoffee,
   today,
 }: {
+  action: FormAction;
   cafeId: string;
   servesMatcha: boolean;
   servesCoffee: boolean;
   today: string;
 }) {
-  const [state, action, pending] = useActionState<FormState, FormData>(addTasting, {});
+  const [state, action, pending] = useActionState<FormState, FormData>(submit, {});
   const e = state.errors ?? {};
   const v = state.values ?? {};
 

@@ -1,7 +1,7 @@
 "use client";
 
-// Leaflet touches `window`, so this module is only ever loaded through
-// next/dynamic with ssr: false (see ./index.tsx).
+// Leaflet touches `window`, so this module is only ever loaded lazily on the
+// client (see ./index.tsx).
 
 import Link from "next/link";
 import { CircleMarker, MapContainer, Popup, TileLayer, useMapEvents } from "react-leaflet";

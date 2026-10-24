@@ -1,11 +1,12 @@
 import Link from "next/link";
-import type { CafeSummary } from "@/lib/data";
+import type { CafeSummary } from "@/lib/cafes";
+import { cafeHref } from "@/lib/routes";
 import { RatingChip, Tag } from "./ratings";
 
 export function CafeCard({ cafe }: { cafe: CafeSummary }) {
   return (
     <Link
-      href={`/cafes/${cafe.id}`}
+      href={cafeHref(cafe.id)}
       className="group flex flex-col gap-3 rounded-2xl border border-line bg-card p-5 transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-3">

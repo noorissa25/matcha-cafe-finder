@@ -1,0 +1,36 @@
+name: publish demo
+
+# Builds the static demo (NEXT_PUBLIC_DEMO=1: fictional sample data, changes kept in the
+# visitor's browser, no server or database) and publishes it to the gh-pages branch,
+# which GitHub Pages serves at https://noorissa25.github.io/matcha-cafe-finder/.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build the static demo
+        run: npm run build:demo
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          force_orphan: true
+          commit_message: "Publish demo"
