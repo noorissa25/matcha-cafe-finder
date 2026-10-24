@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { Container } from "@/components/site";
 import {
   HowItWorks,
   RecommendationsSkeleton,
@@ -13,13 +14,13 @@ import { focusSchema } from "@/lib/validation";
 
 export default function DemoRecommendPage() {
   return (
-    <div className="space-y-8">
+    <Container narrow className="space-y-10 py-12">
       <RecommendIntro />
       <Suspense fallback={<RecommendationsSkeleton />}>
         <Recommendations />
       </Suspense>
       <HowItWorks />
-    </div>
+    </Container>
   );
 }
 

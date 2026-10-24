@@ -1,17 +1,18 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Container } from "@/components/site";
 import { BackLink, CafeDetailSkeleton, CafeDetailView } from "@/components/views/cafe-detail";
 import { addTasting, deleteTasting } from "@/lib/actions";
 import { getCafe } from "@/lib/data";
 
 export default function CafePage({ params }: PageProps<"/cafes/[id]">) {
   return (
-    <div className="space-y-6">
+    <Container className="space-y-8 py-10">
       <BackLink />
       <Suspense fallback={<CafeDetailSkeleton />}>
         <CafeDetail params={params} />
       </Suspense>
-    </div>
+    </Container>
   );
 }
 

@@ -16,7 +16,7 @@ function useMounted(): boolean {
 }
 
 function MapSkeleton({ height }: { height: number }) {
-  return <div style={{ height }} className="animate-pulse rounded-2xl border border-line bg-card" />;
+  return <div style={{ height }} className="animate-pulse rounded-[32px] bg-card" />;
 }
 
 export function CafeMap(props: ComponentProps<typeof LazyCafeMap>) {

@@ -8,7 +8,7 @@ import type { FormAction, FormState } from "@/lib/validation";
 import { LocationPicker } from "./map";
 
 const input =
-  "w-full rounded-lg border border-line bg-card px-3 py-2 text-sm outline-none transition focus:border-matcha focus:ring-2 focus:ring-matcha/20";
+  "w-full rounded-2xl border-2 border-line bg-card px-4 py-2.5 text-base outline-none transition focus:border-matcha focus:ring-4 focus:ring-matcha/20";
 
 function Field({
   label,
@@ -23,10 +23,10 @@ function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-sm font-medium">{label}</span>
+      <span className="font-display text-lg font-bold">{label}</span>
       {children}
-      {hint && !error && <span className="block text-xs text-muted">{hint}</span>}
-      {error && <span className="block text-xs text-danger">{error}</span>}
+      {hint && !error && <span className="block text-sm text-muted">{hint}</span>}
+      {error && <span className="block text-sm font-medium text-danger">{error}</span>}
     </label>
   );
 }
@@ -36,7 +36,7 @@ function Submit({ pending, children }: { pending: boolean; children: React.React
     <button
       type="submit"
       disabled={pending}
-      className="rounded-full bg-matcha px-5 py-2 text-sm font-medium text-cream transition hover:opacity-90 disabled:opacity-60"
+      className="rounded-full bg-matcha px-6 py-2 font-display text-xl font-bold text-cream transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {pending ? "Saving…" : children}
     </button>
@@ -52,7 +52,7 @@ export function CafeForm({ action: submit }: { action: FormAction }) {
   const e = state.errors ?? {};
 
   return (
-    <form action={action} className="grid gap-6 md:grid-cols-2">
+    <form action={action} className="grid gap-8 rounded-[32px] bg-card p-6 sm:p-8 md:grid-cols-2">
       <div className="space-y-4">
         <Field label="Name" error={e.name}>
           <input name="name" defaultValue={v.name} required maxLength={80} className={input} />
@@ -70,8 +70,8 @@ export function CafeForm({ action: submit }: { action: FormAction }) {
           <input name="tags" defaultValue={v.tags} className={input} />
         </Field>
         <fieldset className="space-y-1.5">
-          <legend className="text-sm font-medium">Serves</legend>
-          <div className="flex gap-4 text-sm">
+          <legend className="font-display text-lg font-bold">Serves</legend>
+          <div className="flex gap-5">
             <label className="flex items-center gap-2">
               <input type="checkbox" name="servesMatcha" defaultChecked={state.values ? v.servesMatcha === "on" : true} className="accent-matcha" /> Matcha
             </label>
@@ -79,17 +79,17 @@ export function CafeForm({ action: submit }: { action: FormAction }) {
               <input type="checkbox" name="servesCoffee" defaultChecked={state.values ? v.servesCoffee === "on" : true} className="accent-matcha" /> Coffee
             </label>
           </div>
-          {e.servesMatcha && <span className="block text-xs text-danger">{e.servesMatcha}</span>}
+          {e.servesMatcha && <span className="block text-sm font-medium text-danger">{e.servesMatcha}</span>}
         </fieldset>
       </div>
 
       <div className="space-y-3">
-        <span className="text-sm font-medium">Location</span>
+        <span className="font-display text-lg font-bold">Location</span>
         <LocationPicker value={point} onPick={(pickedLat, pickedLng) => {
             setLat(pickedLat.toFixed(5));
             setLng(pickedLng.toFixed(5));
           }} />
-        <p className="text-xs text-muted">Click the map to drop a pin, or type coordinates.</p>
+        <p className="text-sm text-muted">Click the map to drop a pin, or type coordinates.</p>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Latitude" error={e.lat}>
             <input
@@ -138,8 +138,8 @@ export function TastingForm({
   const v = state.values ?? {};
 
   return (
-    <form action={action} className="space-y-4 rounded-2xl border border-line bg-card p-5">
-      <h3 className="font-display text-lg font-semibold">Log a tasting</h3>
+    <form action={action} className="space-y-5 rounded-[28px] bg-matcha-soft p-6">
+      <h3 className="headline text-3xl">Log a tasting</h3>
       <input type="hidden" name="cafeId" value={cafeId} />
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Drink" error={e.drinkType}>
@@ -153,18 +153,18 @@ export function TastingForm({
         </Field>
       </div>
       <fieldset className="space-y-1.5">
-        <legend className="text-sm font-medium">Rating</legend>
+        <legend className="font-display text-lg font-bold">Rating</legend>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((n) => (
             <label key={n} className="cursor-pointer">
               <input type="radio" name="rating" value={n} required defaultChecked={String(n) === (v.rating ?? "4")} className="peer sr-only" />
-              <span className="flex size-9 items-center justify-center rounded-full border border-line text-sm transition peer-checked:border-matcha peer-checked:bg-matcha peer-checked:text-cream peer-focus-visible:ring-2 peer-focus-visible:ring-matcha/40">
+              <span className="flex size-11 items-center justify-center rounded-full border-2 border-line bg-card font-display text-xl font-bold transition peer-checked:border-matcha peer-checked:bg-matcha peer-checked:text-cream peer-focus-visible:ring-4 peer-focus-visible:ring-matcha/40">
                 {n}
               </span>
             </label>
           ))}
         </div>
-        {e.rating && <span className="block text-xs text-danger">{e.rating}</span>}
+        {e.rating && <span className="block text-sm font-medium text-danger">{e.rating}</span>}
       </fieldset>
       <Field label="Tasting notes" error={e.notes} hint="Grassy? Nutty? Too sweet? These words shape your recommendations.">
         <textarea name="notes" defaultValue={v.notes} rows={3} maxLength={1000} className={input} />
@@ -172,10 +172,14 @@ export function TastingForm({
       <Field label="Visited on" error={e.visitedOn}>
         <input type="date" name="visitedOn" required defaultValue={v.visitedOn ?? today} className={input} />
       </Field>
-      {e.form && <p className="text-sm text-danger">{e.form}</p>}
+      {e.form && <p className="font-medium text-danger">{e.form}</p>}
       <div className="flex items-center gap-3">
         <Submit pending={pending}>Add tasting</Submit>
-        {state.ok && !pending && <span className="text-sm text-matcha">Saved.</span>}
+        {state.ok && !pending && (
+          <span role="status" className="font-script text-2xl text-matcha">
+            Saved!
+          </span>
+        )}
       </div>
     </form>
   );

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { CafeCard } from "@/components/cafe-card";
+import { ArrowDot, Ribbon, Scribble, StatBadge } from "@/components/decor";
+import { Container } from "@/components/site";
 import type { CafeSort, CafeSummary } from "@/lib/cafes";
 
 export const SORTS: Array<{ value: CafeSort; label: string }> = [
@@ -42,17 +44,41 @@ export function filterCafes(cafes: CafeSummary[], filter: Filter): CafeSummary[]
 
 export function ListIntro() {
   return (
-    <section className="space-y-2">
-      <h1 className="font-display text-4xl font-semibold tracking-tight">Your café log</h1>
-      <p className="max-w-2xl text-muted">
-        Every café you have been to or want to try, with matcha and coffee rated separately.
-      </p>
+    <section className="relative overflow-hidden bg-sage pb-28 pt-6 sm:pb-36">
+      <Ribbon className="-bottom-6 left-0 h-40 w-full sm:h-56" />
+      <Container className="relative grid gap-8 md:grid-cols-[1.15fr_1fr] md:items-end">
+        <h1 className="headline text-[clamp(4.5rem,15vw,10.5rem)]">
+          Matcha
+          <span className="block -rotate-3 pl-2 font-script text-[0.42em] font-medium normal-case leading-tight text-matcha">
+            meets
+          </span>
+          <span className="text-coffee">coffee</span>
+        </h1>
+        <div className="space-y-5 pb-2">
+          <div className="hidden md:block">
+            <Scribble>rated separately, always</Scribble>
+          </div>
+          <p className="max-w-md text-xl leading-snug font-medium">
+            Your café log. Every café you have been to or want to try, with the matcha and the coffee rated on their own.
+          </p>
+          <Link href="/recommend" className="group inline-flex items-center gap-1">
+            <ArrowDot className="bg-matcha text-cream" />
+            <span className="rounded-full bg-matcha px-5 py-1.5 font-display text-xl font-bold text-cream transition group-hover:opacity-90">
+              What should I try next?
+            </span>
+          </Link>
+        </div>
+      </Container>
     </section>
   );
 }
 
-/** `cafes` should already be sorted and filtered. */
-export function CafeListView({ cafes, sort, filter }: { cafes: CafeSummary[]; sort: CafeSort; filter: Filter }) {
+/** All cafés in the chosen sort; `filter` is applied here so the badges can show totals. */
+export function CafeListView({ cafes: all, sort, filter }: { cafes: CafeSummary[]; sort: CafeSort; filter: Filter }) {
+  const cafes = filterCafes(all, filter);
+  const tastings = all.reduce((n, c) => n + c.tastingCount, 0);
+  const untried = all.filter((c) => c.tastingCount === 0).length;
+
   const href = (next: { sort?: CafeSort; show?: Filter }) => {
     const q = new URLSearchParams();
     const s = next.sort ?? sort;
@@ -64,27 +90,32 @@ export function CafeListView({ cafes, sort, filter }: { cafes: CafeSummary[]; so
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+    <Container className="relative -mt-20 space-y-8 pb-16 sm:-mt-24">
+      <div className="flex flex-wrap gap-3 sm:gap-5">
+        <StatBadge value={all.length} label={all.length === 1 ? "café" : "cafés"} />
+        <StatBadge value={tastings} label={tastings === 1 ? "tasting" : "tastings"} />
+        <StatBadge value={untried} label="to try" />
+      </div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <Pills label="Show" options={FILTERS} current={filter} href={(v) => href({ show: v })} />
         <Pills label="Sort" options={SORTS} current={sort} href={(v) => href({ sort: v })} />
       </div>
       {cafes.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-line p-10 text-center text-muted">
+        <div className="rounded-[28px] border-2 border-dashed border-line p-10 text-center text-muted">
           No cafés here yet.{" "}
-          <Link href="/cafes/new" className="text-matcha underline underline-offset-2">
+          <Link href="/cafes/new" className="font-semibold text-matcha underline underline-offset-2">
             Add one
           </Link>
           .
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cafes.map((cafe) => (
             <CafeCard key={cafe.id} cafe={cafe} />
           ))}
         </div>
       )}
-    </div>
+    </Container>
   );
 }
 
@@ -101,15 +132,15 @@ function Pills<T extends string>({
 }) {
   return (
     <div className="flex flex-wrap items-center gap-1">
-      <span className="mr-1 text-muted">{label}</span>
+      <span className="mr-1 font-script text-2xl text-muted">{label}</span>
       {options.map((o) => (
         <Link
           key={o.value}
           href={href(o.value)}
           scroll={false}
           aria-current={o.value === current ? "true" : undefined}
-          className={`rounded-full border px-3 py-1 transition ${
-            o.value === current ? "border-matcha bg-matcha-soft text-matcha" : "border-line hover:border-muted"
+          className={`rounded-full px-4 py-1.5 font-display text-lg font-bold transition ${
+            o.value === current ? "bg-matcha text-cream" : "bg-card text-ink hover:bg-matcha-soft"
           }`}
         >
           {o.label}

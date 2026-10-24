@@ -6,6 +6,7 @@ import type { NextConfig } from "next";
 const demo = process.env.NEXT_PUBLIC_DEMO === "1";
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   cacheComponents: !demo,
   partialPrefetching: !demo,
   ...(demo && {

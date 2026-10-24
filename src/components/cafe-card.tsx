@@ -7,20 +7,20 @@ export function CafeCard({ cafe }: { cafe: CafeSummary }) {
   return (
     <Link
       href={cafeHref(cafe.id)}
-      className="group flex flex-col gap-3 rounded-2xl border border-line bg-card p-5 transition hover:-translate-y-0.5 hover:shadow-md"
+      className="group flex flex-col gap-4 rounded-[28px] bg-card p-6 shadow-[0_1px_0_var(--line)] transition duration-200 hover:-translate-y-1 hover:shadow-lg motion-safe:odd:hover:-rotate-1 motion-safe:even:hover:rotate-1"
     >
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <h2 className="font-display text-lg font-semibold leading-tight group-hover:text-matcha">{cafe.name}</h2>
-          <p className="text-sm text-muted">{cafe.neighborhood}</p>
+        <div className="min-w-0">
+          <h2 className="headline text-3xl group-hover:text-matcha">{cafe.name}</h2>
+          <p className="mt-1 font-medium text-muted">{cafe.neighborhood}</p>
         </div>
         {cafe.tastingCount === 0 && (
-          <span className="shrink-0 rounded-full border border-dashed border-muted px-2 py-0.5 text-xs text-muted">
-            To try
+          <span className="shrink-0 -rotate-6 rounded-full border-2 border-dashed border-muted px-3 font-script text-xl text-muted">
+            to try
           </span>
         )}
       </div>
-      {cafe.description && <p className="line-clamp-2 text-sm">{cafe.description}</p>}
+      {cafe.description && <p className="line-clamp-2 leading-snug">{cafe.description}</p>}
       <div className="mt-auto flex flex-wrap items-center gap-1.5">
         {cafe.servesMatcha && <RatingChip kind="matcha" value={cafe.matchaAvg} />}
         {cafe.servesCoffee && <RatingChip kind="coffee" value={cafe.coffeeAvg} />}
@@ -34,9 +34,9 @@ export function CafeCard({ cafe }: { cafe: CafeSummary }) {
 
 export function CardGridSkeleton({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="mx-auto grid w-full max-w-6xl gap-5 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} className="h-44 animate-pulse rounded-2xl border border-line bg-card" />
+        <div key={i} className="h-52 animate-pulse rounded-[28px] bg-card" />
       ))}
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Container } from "@/components/site";
 import { CafeForm } from "@/components/forms";
 import { NewCafeIntro } from "@/components/views/new-cafe";
 import { createCafe } from "@/lib/demo/store";
@@ -19,9 +20,9 @@ export default function DemoNewCafePage() {
   };
 
   return (
-    <div className="space-y-6">
+    <Container className="space-y-8 py-12">
       <NewCafeIntro />
       <CafeForm action={action} />
-    </div>
+    </Container>
   );
 }

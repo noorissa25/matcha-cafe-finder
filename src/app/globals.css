@@ -1,46 +1,59 @@
 @import "tailwindcss";
 
+/* Matcha palette: pale mint page, sage blocks, deep forest type.
+   Contrast (light): ink on cream 9.2:1, ink on sage 6.1:1, muted on cream 5.4:1,
+   cream on matcha 8.1:1. `leaf` is 3.1:1 on cream, so it is only for large display text. */
 :root {
-  --cream: #f7f3ea;
-  --card: #fffdf8;
-  --ink: #23271f;
-  --muted: #6b6f63;
-  --line: #e4dfd2;
-  --matcha: #4f7a2b;
-  --matcha-soft: #e5eed6;
-  --coffee: #7b4a2b;
-  --coffee-soft: #f1e3d6;
+  --cream: #e9f0e1;
+  --sage: #b4cb9e;
+  --card: #f6f9f1;
+  --ink: #1e4620;
+  --muted: #4a6844;
+  --line: #cddcbf;
+  --matcha: #2a5a26;
+  --matcha-soft: #d3e3c3;
+  --leaf: #5e9445;
+  --coffee: #7a4a2a;
+  --coffee-soft: #ecdccb;
   --danger: #a33a2a;
+  --ribbon: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --cream: #161813;
-    --card: #1f221b;
-    --ink: #ecebe4;
-    --muted: #a3a698;
-    --line: #34382d;
-    --matcha: #9cc46b;
-    --matcha-soft: #2b3a1e;
+    --cream: #122211;
+    --sage: #1f3a1c;
+    --card: #1a2f18;
+    --ink: #e4efd9;
+    --muted: #a9c49a;
+    --line: #2e4a2b;
+    --matcha: #a3d083;
+    --matcha-soft: #28452a;
+    --leaf: #a3d083;
     --coffee: #d9a27a;
     --coffee-soft: #3a2a1f;
     --danger: #e98a78;
+    --ribbon: #2e4a2b;
   }
 }
 
 @theme inline {
   --color-cream: var(--cream);
+  --color-sage: var(--sage);
   --color-card: var(--card);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-matcha: var(--matcha);
   --color-matcha-soft: var(--matcha-soft);
+  --color-leaf: var(--leaf);
   --color-coffee: var(--coffee);
   --color-coffee-soft: var(--coffee-soft);
   --color-danger: var(--danger);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
+  --color-ribbon: var(--ribbon);
+  --font-sans: var(--font-barlow);
+  --font-display: var(--font-barlow-condensed);
+  --font-script: var(--font-caveat);
 }
 
 body {
@@ -48,8 +61,32 @@ body {
   color: var(--ink);
 }
 
+/* Big condensed all-caps headlines. */
+@utility headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--matcha);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
 .leaflet-container {
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-barlow), system-ui, sans-serif;
   background: var(--line);
 }
 

@@ -9,14 +9,14 @@ import type { FormAction } from "@/lib/validation";
 
 export function BackLink() {
   return (
-    <Link href="/" className="text-sm text-muted hover:text-ink">
-      ← All cafés
+    <Link href="/" className="inline-flex items-center gap-1 rounded-full bg-card px-4 py-1.5 font-display text-lg font-bold hover:bg-matcha-soft">
+      <span aria-hidden>←</span> All cafés
     </Link>
   );
 }
 
 export function CafeDetailSkeleton() {
-  return <div className="h-96 animate-pulse rounded-2xl border border-line bg-card" />;
+  return <div className="h-96 animate-pulse rounded-[28px] bg-card" />;
 }
 
 export function CafeDetailView({
@@ -33,15 +33,15 @@ export function CafeDetailView({
   const today = new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-      <div className="space-y-8">
-        <header className="space-y-3">
-          <h1 className="font-display text-4xl font-semibold tracking-tight">{cafe.name}</h1>
-          <p className="text-muted">
+    <div className="grid gap-10 lg:grid-cols-[1fr_400px]">
+      <div className="space-y-10">
+        <header className="space-y-4">
+          <h1 className="headline text-[clamp(3.25rem,9vw,6rem)]">{cafe.name}</h1>
+          <p className="text-lg font-medium text-muted">
             {cafe.neighborhood}
             {cafe.address && <> · {cafe.address}</>}
           </p>
-          {cafe.description && <p className="max-w-2xl">{cafe.description}</p>}
+          {cafe.description && <p className="max-w-2xl text-xl leading-snug">{cafe.description}</p>}
           <div className="flex flex-wrap gap-1.5">
             {cafe.servesMatcha && <RatingChip kind="matcha" value={average(ratingsFor("matcha"))} />}
             {cafe.servesCoffee && <RatingChip kind="coffee" value={average(ratingsFor("coffee"))} />}
@@ -52,31 +52,35 @@ export function CafeDetailView({
         </header>
 
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-semibold">Tastings</h2>
+          <h2 className="headline text-4xl">Tastings</h2>
           {cafe.tastings.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-line p-6 text-muted">
+            <p className="rounded-[28px] border-2 border-dashed border-line p-6 text-muted">
               Nothing logged yet. Once you visit, add what you ordered and how it was.
             </p>
           ) : (
-            <ul className="divide-y divide-line rounded-2xl border border-line bg-card">
+            <ul className="space-y-3">
               {cafe.tastings.map((t) => (
-                <li key={t.id} className="flex gap-4 p-4">
+                <li key={t.id} className="flex gap-4 rounded-[24px] bg-card p-5">
                   <div className="min-w-0 flex-1 space-y-1">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <span className={`text-xs font-semibold uppercase tracking-wide ${t.drinkType === "matcha" ? "text-matcha" : "text-coffee"}`}>
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 font-display text-sm font-bold uppercase tracking-wide ${
+                          t.drinkType === "matcha" ? "bg-matcha-soft text-matcha" : "bg-coffee-soft text-coffee"
+                        }`}
+                      >
                         {t.drinkType}
                       </span>
-                      <span className="font-medium">{t.drinkName}</span>
+                      <span className="font-display text-xl font-bold">{t.drinkName}</span>
                       <Stars rating={t.rating} />
                     </div>
-                    {t.notes && <p className="text-sm">{t.notes}</p>}
-                    <p className="text-xs text-muted">
+                    {t.notes && <p className="leading-snug">{t.notes}</p>}
+                    <p className="text-sm text-muted">
                       {t.visitedOn.toLocaleDateString("en-US", { dateStyle: "medium", timeZone: "UTC" })}
                     </p>
                   </div>
                   <form action={deleteTasting}>
                     <input type="hidden" name="id" value={t.id} />
-                    <button type="submit" className="text-xs text-muted hover:text-danger" aria-label={`Delete ${t.drinkName} tasting`}>
+                    <button type="submit" className="rounded-full px-3 py-1.5 text-sm font-medium text-muted hover:bg-cream hover:text-danger" aria-label={`Delete ${t.drinkName} tasting`}>
                       Delete
                     </button>
                   </form>

@@ -55,7 +55,7 @@ export function CafeMap({ cafes, height = 520 }: { cafes: MapCafe[]; height?: nu
       boundsOptions={{ padding: [40, 40] }}
       scrollWheelZoom={false}
       style={{ height, width: "100%" }}
-      className="rounded-2xl border border-line"
+      className="rounded-[32px] border-8 border-card"
     >
       <Tiles />
       {cafes.map((cafe) => (
@@ -96,7 +96,7 @@ export function LocationPicker({
       center={value ? [value.lat, value.lng] : BOSTON}
       zoom={12}
       style={{ height: 280, width: "100%" }}
-      className="rounded-xl border border-line"
+      className="rounded-[24px] border-4 border-card"
     >
       <Tiles />
       <ClickToPick onPick={onPick} />

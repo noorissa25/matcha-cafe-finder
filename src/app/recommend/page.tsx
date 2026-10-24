@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { Container } from "@/components/site";
 import {
   HowItWorks,
   RecommendationsSkeleton,
@@ -15,13 +16,13 @@ export const metadata: Metadata = { title: "What should I try next?" };
 
 export default function RecommendPage({ searchParams }: PageProps<"/recommend">) {
   return (
-    <div className="space-y-8">
+    <Container narrow className="space-y-10 py-12">
       <RecommendIntro />
       <Suspense fallback={<RecommendationsSkeleton />}>
         <Recommendations searchParams={searchParams} />
       </Suspense>
       <HowItWorks />
-    </div>
+    </Container>
   );
 }
 

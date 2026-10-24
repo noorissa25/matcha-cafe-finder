@@ -4,18 +4,19 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { Container } from "@/components/site";
 import { BackLink, CafeDetailSkeleton, CafeDetailView } from "@/components/views/cafe-detail";
 import { addTasting, cafeDetail, deleteTasting, useDemoState } from "@/lib/demo/store";
 import NotFound from "../not-found";
 
 export default function DemoCafePage() {
   return (
-    <div className="space-y-6">
+    <Container className="space-y-8 py-10">
       <BackLink />
       <Suspense fallback={<CafeDetailSkeleton />}>
         <CafeDetail />
       </Suspense>
-    </div>
+    </Container>
   );
 }
 
