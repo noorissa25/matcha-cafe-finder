@@ -8,6 +8,14 @@ A small full-stack app for keeping track of cafés: log where you went, rate the
 | --- | --- |
 | ![Recommendations](docs/screenshots/recommendations.jpg) | ![Map](docs/screenshots/map.jpg) |
 
+On a phone:
+
+<p>
+  <img src="docs/screenshots/phone-cafes.jpg" alt="Café list on a phone" width="250">
+  <img src="docs/screenshots/phone-recommendations.jpg" alt="Recommendations on a phone" width="250">
+  <img src="docs/screenshots/phone-map.jpg" alt="Map on a phone" width="250">
+</p>
+
 > Demo GIF: _coming soon_ (logging a tasting and watching the recommendations change).
 
 The sample data is fictional. Café names, addresses and tasting notes are made up; the pins sit in real Boston-area neighborhoods so the map has something to show.
