@@ -1,0 +1,47 @@
+// PostgreSQL is the primary target. For local dev without Postgres, `scripts/db.mjs`
+// derives a SQLite copy of this file when DATABASE_URL starts with "file:".
+// Keep the schema portable: no enums, arrays or Json columns.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cafe {
+  id           String    @id @default(cuid())
+  name         String
+  neighborhood String
+  address      String
+  lat          Float
+  lng          Float
+  description  String
+  // Comma-separated, lowercase, e.g. "ceremonial grade,oat milk,pour over"
+  tags         String    @default("")
+  servesMatcha Boolean   @default(true)
+  servesCoffee Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  tastings     Tasting[]
+
+  @@index([neighborhood])
+}
+
+model Tasting {
+  id        String   @id @default(cuid())
+  cafeId    String
+  cafe      Cafe     @relation(fields: [cafeId], references: [id], onDelete: Cascade)
+  // "matcha" | "coffee", validated in src/lib/validation.ts
+  drinkType String
+  drinkName String
+  // 1 to 5
+  rating    Int
+  notes     String   @default("")
+  visitedOn DateTime
+  createdAt DateTime @default(now())
+
+  @@index([cafeId])
+  @@index([drinkType])
+}
