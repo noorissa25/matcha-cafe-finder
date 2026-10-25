@@ -1,6 +1,6 @@
 // Data for the static demo (GitHub Pages), which has no server or database.
 //
-// It starts from the same fictional sample cafés as the database seed. Anything a
+// It starts from the same sample cafés as the database seed. Anything a
 // visitor adds or deletes is kept in their own browser's localStorage and never
 // leaves it. "Reset demo" goes back to the sample data.
 
@@ -11,7 +11,7 @@ import { parseTags } from "../recommend/text";
 import { sampleCafes } from "../sample-data";
 import { cafeSchema, fieldErrors, formToObject, tastingSchema, type FormState } from "../validation";
 
-const STORAGE_KEY = "matcha-cafe-finder:demo:v1";
+const STORAGE_KEY = "matcha-cafe-finder:demo:v2";
 
 interface StoredTasting {
   id: string;

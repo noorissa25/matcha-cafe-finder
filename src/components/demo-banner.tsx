@@ -5,7 +5,7 @@ import { resetDemo } from "@/lib/demo/store";
 export function DemoBanner() {
   return (
     <div className="bg-matcha px-4 py-2 text-center text-sm font-medium text-cream">
-      Live demo with fictional cafés. Anything you add is saved only in this browser.{" "}
+      Live demo with real Boston-area cafés and no ratings yet. Anything you add is saved only in this browser.{" "}
       <button
         type="button"
         onClick={() => {

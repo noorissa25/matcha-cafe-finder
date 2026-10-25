@@ -25,7 +25,7 @@ const tasting = (cafeId: string) =>
 describe("demo store", () => {
   beforeEach(() => resetDemo());
 
-  it("starts from the fictional sample cafés, in name order", () => {
+  it("starts from the sample cafés, in name order", () => {
     const names = cafeSummaries(getDemoState()).map((c) => c.name);
     expect(names).toHaveLength(sampleCafes.length);
     expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
@@ -45,16 +45,16 @@ describe("demo store", () => {
 
   it("logs and deletes tastings, and recommendations follow", async () => {
     const ids = () => demoRecommendations(getDemoState(), "matcha").recommendations.map((r) => r.cafe.id);
-    expect(ids()).toContain("little-uji");
+    expect(ids()).toContain("jaho-coffee-tea");
 
-    expect((await addTasting({}, tasting("little-uji"))).ok).toBe(true);
-    expect(ids()).not.toContain("little-uji");
-    const detail = cafeDetail(getDemoState(), "little-uji")!;
+    expect((await addTasting({}, tasting("jaho-coffee-tea"))).ok).toBe(true);
+    expect(ids()).not.toContain("jaho-coffee-tea");
+    const detail = cafeDetail(getDemoState(), "jaho-coffee-tea")!;
     expect(detail.tastings).toHaveLength(1);
-    expect(cafeSummaries(getDemoState()).find((c) => c.id === "little-uji")?.matchaAvg).toBe(5);
+    expect(cafeSummaries(getDemoState()).find((c) => c.id === "jaho-coffee-tea")?.matchaAvg).toBe(5);
 
     deleteTasting(form({ id: detail.tastings[0].id }));
-    expect(cafeDetail(getDemoState(), "little-uji")!.tastings).toHaveLength(0);
+    expect(cafeDetail(getDemoState(), "jaho-coffee-tea")!.tastings).toHaveLength(0);
   });
 
   it("rejects a tasting for an unknown café", async () => {
@@ -62,8 +62,8 @@ describe("demo store", () => {
   });
 
   it("reset goes back to the sample data", async () => {
-    await addTasting({}, tasting("little-uji"));
+    await addTasting({}, tasting("jaho-coffee-tea"));
     resetDemo();
-    expect(cafeDetail(getDemoState(), "little-uji")!.tastings).toHaveLength(0);
+    expect(cafeDetail(getDemoState(), "jaho-coffee-tea")!.tastings).toHaveLength(0);
   });
 });

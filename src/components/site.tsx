@@ -79,7 +79,7 @@ export function SiteShell({ banner, children }: { banner?: ReactNode; children: 
               or coffee?
             </p>
             <p className="max-w-sm text-sm sm:text-right">
-              Sample cafés are fictional. Map data © OpenStreetMap contributors.{" "}
+              Café details from public menus, Oct 2026. Map data © OpenStreetMap contributors.{" "}
               <a href="https://github.com/noorissa25/matcha-cafe-finder" className="font-semibold underline underline-offset-2">
                 Source on GitHub
               </a>

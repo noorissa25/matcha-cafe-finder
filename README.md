@@ -2,7 +2,7 @@
 
 A small full-stack app for keeping track of cafés: log where you went, rate the matcha and the coffee separately, write tasting notes, see everything on a map, and get a ranked, explained answer to "what should I try next?"
 
-**Live demo: https://noorissa25.github.io/matcha-cafe-finder/** (fictional sample cafés; anything you add stays in your own browser)
+**Live demo: https://noorissa25.github.io/matcha-cafe-finder/** (real Boston-area cafés with no ratings yet; anything you add stays in your own browser)
 
 ![Café list](docs/screenshots/cafes.jpg)
 
@@ -20,7 +20,7 @@ On a phone:
 
 > Demo GIF: _coming soon_ (logging a tasting and watching the recommendations change).
 
-The sample data is fictional. Café names, addresses and tasting notes are made up; the pins sit in real Boston-area neighborhoods so the map has something to show.
+The sample data is 10 real cafés in Boston, Cambridge, Somerville and Brookline, including Chinatown. Names, addresses and pins come from OpenStreetMap, and the drinks in each description come from the café's menu listings (checked October 2026; menus change). There are no sample ratings or tasting notes: those are personal, so every café starts as "to try".
 
 ## Features
 
@@ -47,7 +47,7 @@ Generic words that every café shares ("matcha", "coffee", "latte", "cafe" and s
 The demo on GitHub Pages is a static build of the same app. GitHub Pages cannot run a server or a database, so `npm run build:demo` (`NEXT_PUBLIC_DEMO=1`) changes three things:
 
 - **Routes:** Next.js only picks up the `*.demo.tsx` route files. They render the same shared views in [`src/components/views`](src/components/views) but read data from [`src/lib/demo/store.ts`](src/lib/demo/store.ts) instead of Prisma.
-- **Data:** the store starts from the same fictional sample cafés as the database seed ([`src/lib/sample-data.ts`](src/lib/sample-data.ts)). Cafés and tastings a visitor adds are validated with the same zod schemas and saved to that browser's `localStorage`. "Reset demo" in the banner clears them.
+- **Data:** the store starts from the same sample cafés as the database seed ([`src/lib/sample-data.ts`](src/lib/sample-data.ts)). Cafés and tastings a visitor adds are validated with the same zod schemas and saved to that browser's `localStorage`. "Reset demo" in the banner clears them.
 - **Output:** a plain HTML export under `/matcha-cafe-finder`. A café page is `/cafe?id=…` instead of `/cafes/[id]`, because a static export cannot prerender pages for cafés added later.
 
 The recommender is pure TypeScript, so it runs in the browser unchanged. The demo has no AI note and no JSON API. The [`publish demo`](.github/workflows/pages.yml) workflow rebuilds it and pushes it to the `gh-pages` branch on every push to `main`.
@@ -109,7 +109,7 @@ git clone <this repo> matcha-cafe-finder
 cd matcha-cafe-finder
 cp .env.example .env        # defaults to a local SQLite file
 npm install
-npm run db:setup            # create tables and load the fictional sample data
+npm run db:setup            # create tables and load the sample cafés
 npm run dev                 # http://localhost:3000
 ```
 
@@ -149,7 +149,7 @@ ANTHROPIC_API_KEY="sk-ant-..."
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Generate Next.js route types, then `tsc --noEmit` |
 | `npm run db:push` | Create or update tables for the current `DATABASE_URL` |
-| `npm run db:seed` | Replace all data with the fictional sample cafés |
+| `npm run db:seed` | Replace all data with the sample cafés |
 | `npm run db:setup` | `db:push` then `db:seed` |
 
 ## Project structure
@@ -157,7 +157,7 @@ ANTHROPIC_API_KEY="sk-ant-..."
 ```
 prisma/
   schema.prisma        PostgreSQL schema (SQLite copy is generated)
-  seed.ts              fictional sample cafés and tastings
+  seed.ts              loads the sample cafés
 scripts/db.mjs         runs Prisma against the right provider
 scripts/serve-demo.mjs serves the static demo locally under /matcha-cafe-finder
 src/
@@ -168,7 +168,7 @@ src/
   lib/
     recommend/         scoring, text utilities and their tests
     demo/              browser-only data store for the static demo
-    sample-data.ts     fictional cafés used by the seed and the demo
+    sample-data.ts     real cafés used by the seed and the demo
     cafes.ts           café summaries and sorting (no database access)
     actions.ts         Server Actions
     data.ts            database reads

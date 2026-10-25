@@ -1,4 +1,4 @@
-// Loads the fictional sample cafes from src/lib/sample-data.ts.
+// Loads the sample cafés from src/lib/sample-data.ts.
 //
 // Running the seed REPLACES all cafes and tastings in the database.
 
@@ -21,7 +21,7 @@ async function main() {
   }
 
   const tastingCount = cafes.reduce((n, c) => n + (c.tastings?.length ?? 0), 0);
-  console.log(`Seeded ${cafes.length} fictional cafes and ${tastingCount} tastings.`);
+  console.log(`Seeded ${cafes.length} cafés and ${tastingCount} tastings.`);
 }
 
 main()
