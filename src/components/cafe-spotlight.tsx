@@ -63,9 +63,9 @@ export function CafeSpotlight({ cafes }: { cafes: CafeSummary[] }) {
         </p>
       </div>
 
-      <div className="relative mt-8 h-[19rem] [--g:1.25rem] [--w:min(82vw,24rem)] sm:h-[18rem]">
+      <div className="relative mt-8 [--g:1.25rem] [--w:min(82vw,24rem)]">
         <ul
-          className="absolute left-1/2 top-0 flex h-full gap-[var(--g)] transition-transform duration-500 ease-out motion-reduce:transition-none"
+          className="relative left-1/2 flex w-max gap-[var(--g)] transition-transform duration-500 ease-out motion-reduce:transition-none"
           style={{
             transform: `translateX(calc(-1 * (${current} * (var(--w) + var(--g)) + var(--w) / 2)))`,
           }}
@@ -102,7 +102,7 @@ function SpotlightCard({
     <li
       aria-hidden={!active}
       onClick={active ? undefined : onSelect}
-      className={`flex h-full w-[var(--w)] shrink-0 flex-col rounded-md border p-6 transition duration-500 sm:p-8 ${
+      className={`flex min-h-[17rem] w-[var(--w)] shrink-0 flex-col rounded-md border p-6 transition duration-500 sm:p-8 ${
         active
           ? "border-white bg-white text-[#1e4620]"
           : "cursor-pointer border-white/45 bg-[#1c2418]/55 text-white backdrop-blur-sm hover:bg-[#1c2418]/65"
