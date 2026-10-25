@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CafeCard } from "@/components/cafe-card";
+import { CafeSpotlight } from "@/components/cafe-spotlight";
 import { ArrowDot, Ribbon, Scribble, StatBadge } from "@/components/decor";
 import { Container } from "@/components/site";
 import type { CafeSort, CafeSummary } from "@/lib/cafes";
@@ -22,18 +23,39 @@ export const FILTERS = [
 
 export type Filter = (typeof FILTERS)[number]["value"];
 
-function pick<T extends string>(value: string | string[] | null | undefined, allowed: readonly T[], fallback: T): T {
-  return typeof value === "string" && (allowed as readonly string[]).includes(value) ? (value as T) : fallback;
+function pick<T extends string>(
+  value: string | string[] | null | undefined,
+  allowed: readonly T[],
+  fallback: T,
+): T {
+  return typeof value === "string" &&
+    (allowed as readonly string[]).includes(value)
+    ? (value as T)
+    : fallback;
 }
 
-export function parseListParams(params: { sort?: string | string[] | null; show?: string | string[] | null }) {
+export function parseListParams(params: {
+  sort?: string | string[] | null;
+  show?: string | string[] | null;
+}) {
   return {
-    sort: pick(params.sort, SORTS.map((s) => s.value), "name"),
-    filter: pick<Filter>(params.show, FILTERS.map((f) => f.value), "all"),
+    sort: pick(
+      params.sort,
+      SORTS.map((s) => s.value),
+      "name",
+    ),
+    filter: pick<Filter>(
+      params.show,
+      FILTERS.map((f) => f.value),
+      "all",
+    ),
   };
 }
 
-export function filterCafes(cafes: CafeSummary[], filter: Filter): CafeSummary[] {
+export function filterCafes(
+  cafes: CafeSummary[],
+  filter: Filter,
+): CafeSummary[] {
   return cafes.filter((cafe) => {
     if (filter === "matcha") return cafe.servesMatcha;
     if (filter === "coffee") return cafe.servesCoffee;
@@ -59,9 +81,13 @@ export function ListIntro() {
             <Scribble>rated separately, always</Scribble>
           </div>
           <p className="max-w-md text-xl leading-snug font-medium">
-            Your café log. Every café you have been to or want to try, with the matcha and the coffee rated on their own.
+            Your café log. Every café you have been to or want to try, with the
+            matcha and the coffee rated on their own.
           </p>
-          <Link href="/recommend" className="group inline-flex items-center gap-1">
+          <Link
+            href="/recommend"
+            className="group inline-flex items-center gap-1"
+          >
             <ArrowDot className="bg-matcha text-cream" />
             <span className="rounded-full bg-matcha px-5 py-1.5 font-display text-xl font-bold text-cream transition group-hover:opacity-90">
               What should I try next?
@@ -74,7 +100,15 @@ export function ListIntro() {
 }
 
 /** All cafés in the chosen sort; `filter` is applied here so the badges can show totals. */
-export function CafeListView({ cafes: all, sort, filter }: { cafes: CafeSummary[]; sort: CafeSort; filter: Filter }) {
+export function CafeListView({
+  cafes: all,
+  sort,
+  filter,
+}: {
+  cafes: CafeSummary[];
+  sort: CafeSort;
+  filter: Filter;
+}) {
   const cafes = filterCafes(all, filter);
   const tastings = all.reduce((n, c) => n + c.tastingCount, 0);
   const untried = all.filter((c) => c.tastingCount === 0).length;
@@ -90,32 +124,54 @@ export function CafeListView({ cafes: all, sort, filter }: { cafes: CafeSummary[
   };
 
   return (
-    <Container className="relative -mt-20 space-y-8 pb-16 sm:-mt-24">
-      <div className="flex flex-wrap gap-3 sm:gap-5">
-        <StatBadge value={all.length} label={all.length === 1 ? "café" : "cafés"} />
-        <StatBadge value={tastings} label={tastings === 1 ? "tasting" : "tastings"} />
-        <StatBadge value={untried} label="to try" />
-      </div>
-      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-        <Pills label="Show" options={FILTERS} current={filter} href={(v) => href({ show: v })} />
-        <Pills label="Sort" options={SORTS} current={sort} href={(v) => href({ sort: v })} />
-      </div>
-      {cafes.length === 0 ? (
-        <div className="rounded-[28px] border-2 border-dashed border-line p-10 text-center text-muted">
-          No cafés here yet.{" "}
-          <Link href="/cafes/new" className="font-semibold text-matcha underline underline-offset-2">
-            Add one
-          </Link>
-          .
+    <>
+      <Container className="relative -mt-20 space-y-8 pb-16 sm:-mt-24">
+        <div className="flex flex-wrap gap-3 sm:gap-5">
+          <StatBadge
+            value={all.length}
+            label={all.length === 1 ? "café" : "cafés"}
+          />
+          <StatBadge
+            value={tastings}
+            label={tastings === 1 ? "tasting" : "tastings"}
+          />
+          <StatBadge value={untried} label="to try" />
         </div>
-      ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {cafes.map((cafe) => (
-            <CafeCard key={cafe.id} cafe={cafe} />
-          ))}
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+          <Pills
+            label="Show"
+            options={FILTERS}
+            current={filter}
+            href={(v) => href({ show: v })}
+          />
+          <Pills
+            label="Sort"
+            options={SORTS}
+            current={sort}
+            href={(v) => href({ sort: v })}
+          />
         </div>
-      )}
-    </Container>
+        {cafes.length === 0 ? (
+          <div className="rounded-[28px] border-2 border-dashed border-line p-10 text-center text-muted">
+            No cafés here yet.{" "}
+            <Link
+              href="/cafes/new"
+              className="font-semibold text-matcha underline underline-offset-2"
+            >
+              Add one
+            </Link>
+            .
+          </div>
+        ) : (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {cafes.map((cafe) => (
+              <CafeCard key={cafe.id} cafe={cafe} />
+            ))}
+          </div>
+        )}
+      </Container>
+      <CafeSpotlight cafes={all} />
+    </>
   );
 }
 
@@ -140,7 +196,9 @@ function Pills<T extends string>({
           scroll={false}
           aria-current={o.value === current ? "true" : undefined}
           className={`rounded-full px-4 py-1.5 font-display text-lg font-bold transition ${
-            o.value === current ? "bg-matcha text-cream" : "bg-card text-ink hover:bg-matcha-soft"
+            o.value === current
+              ? "bg-matcha text-cream"
+              : "bg-card text-ink hover:bg-matcha-soft"
           }`}
         >
           {o.label}
