@@ -123,7 +123,7 @@ function SpotlightCard({
             rel="noopener noreferrer"
             className="shrink-0 text-sm font-semibold text-[#2a5a26] underline underline-offset-2 hover:no-underline"
           >
-            Google reviews <span aria-hidden>↗</span>
+            Google reviews <span aria-hidden>{"\u2197\uFE0E"}</span>
             <span className="sr-only">(opens in a new tab)</span>
           </a>
         )}
