@@ -7,6 +7,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import type { CafeSummary } from "@/lib/cafes";
+import { ExternalArrow } from "@/components/decor";
 import { cafeHref, googleMapsHref } from "@/lib/routes";
 
 export function CafeSpotlight({ cafes }: { cafes: CafeSummary[] }) {
@@ -123,7 +124,7 @@ function SpotlightCard({
             rel="noopener noreferrer"
             className="shrink-0 text-sm font-semibold text-[#2a5a26] underline underline-offset-2 hover:no-underline"
           >
-            Google reviews <span aria-hidden>{"\u2197\uFE0E"}</span>
+            Google reviews <ExternalArrow />
             <span className="sr-only">(opens in a new tab)</span>
           </a>
         )}
