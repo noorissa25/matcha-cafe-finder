@@ -11,7 +11,7 @@ import { parseTags } from "../recommend/text";
 import { sampleCafes } from "../sample-data";
 import { cafeSchema, fieldErrors, formToObject, tastingSchema, type FormState } from "../validation";
 
-const STORAGE_KEY = "matcha-cafe-finder:demo:v2";
+const STORAGE_KEY = "matcha-cafe-finder:demo:v3";
 
 interface StoredTasting {
   id: string;
