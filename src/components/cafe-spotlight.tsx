@@ -118,7 +118,7 @@ function SpotlightCard({
       <h3 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
         {cafe.name}
       </h3>
-      <p className="mt-2 line-clamp-3 text-lg leading-snug opacity-90">
+      <p className="mb-5 mt-2 line-clamp-3 text-lg leading-snug opacity-90">
         {cafe.description}
       </p>
       <div
