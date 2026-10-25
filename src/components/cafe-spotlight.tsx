@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import type { CafeSummary } from "@/lib/cafes";
-import { cafeHref } from "@/lib/routes";
+import { cafeHref, googleMapsHref } from "@/lib/routes";
 
 export function CafeSpotlight({ cafes }: { cafes: CafeSummary[] }) {
   const [index, setIndex] = useState(() => Math.min(1, cafes.length - 1));
@@ -108,13 +108,26 @@ function SpotlightCard({
           : "cursor-pointer border-white/45 bg-[#1c2418]/55 text-white backdrop-blur-sm hover:bg-[#1c2418]/65"
       }`}
     >
-      <p
-        className={`text-sm font-semibold uppercase tracking-wider ${active ? "text-[#4f7f3a]" : "text-[#b9d6a2]"}`}
-      >
-        {[cafe.servesMatcha && "Matcha", cafe.servesCoffee && "Coffee"]
-          .filter(Boolean)
-          .join(" · ")}
-      </p>
+      <div className="flex items-baseline justify-between gap-3">
+        <p
+          className={`text-sm font-semibold uppercase tracking-wider ${active ? "text-[#4f7f3a]" : "text-[#b9d6a2]"}`}
+        >
+          {[cafe.servesMatcha && "Matcha", cafe.servesCoffee && "Coffee"]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+        {active && (
+          <a
+            href={googleMapsHref(cafe)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 text-sm font-semibold text-[#2a5a26] underline underline-offset-2 hover:no-underline"
+          >
+            Google reviews <span aria-hidden>↗</span>
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+        )}
+      </div>
       <h3 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
         {cafe.name}
       </h3>

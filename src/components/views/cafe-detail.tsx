@@ -5,6 +5,7 @@ import { TastingForm } from "@/components/forms";
 import { CafeMap } from "@/components/map";
 import { RatingChip, Stars, Tag } from "@/components/ratings";
 import { average, type CafeDetail } from "@/lib/cafes";
+import { googleMapsHref } from "@/lib/routes";
 import type { FormAction } from "@/lib/validation";
 
 export function BackLink() {
@@ -41,6 +42,16 @@ export function CafeDetailView({
             {cafe.neighborhood}
             {cafe.address && <> · {cafe.address}</>}
           </p>
+          <a
+            href={googleMapsHref(cafe)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full bg-card px-4 py-1.5 font-semibold text-matcha underline-offset-2 hover:underline"
+          >
+            Reviews on Google Maps
+            <span aria-hidden>↗</span>
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
           {cafe.description && <p className="max-w-2xl text-xl leading-snug">{cafe.description}</p>}
           <div className="flex flex-wrap gap-1.5">
             {cafe.servesMatcha && <RatingChip kind="matcha" value={average(ratingsFor("matcha"))} />}
