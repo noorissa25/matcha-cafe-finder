@@ -89,7 +89,7 @@ export function ListIntro() {
             className="group inline-flex items-center gap-1"
           >
             <ArrowDot className="bg-matcha text-cream" />
-            <span className="rounded-full bg-matcha px-5 py-1.5 font-display text-xl font-bold text-cream transition group-hover:opacity-90">
+            <span className="rounded-full bg-matcha px-5 py-1.5 font-sans text-xl font-semibold text-cream transition group-hover:opacity-90">
               What should I try next?
             </span>
           </Link>
@@ -195,7 +195,7 @@ function Pills<T extends string>({
           href={href(o.value)}
           scroll={false}
           aria-current={o.value === current ? "true" : undefined}
-          className={`rounded-full px-4 py-1.5 font-display text-lg font-bold transition ${
+          className={`rounded-full px-4 py-1.5 font-sans text-lg font-semibold transition ${
             o.value === current
               ? "bg-matcha text-cream"
               : "bg-card text-ink hover:bg-matcha-soft"

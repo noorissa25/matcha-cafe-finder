@@ -46,10 +46,10 @@ export function CafeSpotlight({ cafes }: { cafes: CafeSummary[] }) {
       />
 
       <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-6">
-        <h2 className="text-center font-display text-[clamp(4rem,16vw,11rem)] font-bold leading-[0.85] tracking-tight">
+        <h2 className="text-center font-display text-[clamp(4rem,16vw,11rem)] font-semibold leading-[0.9] tracking-tight">
           Where to next.
         </h2>
-        <MatchaGlass className="-mt-[clamp(1.5rem,5vw,3.5rem)] h-48 w-auto drop-shadow-[18px_30px_24px_rgb(20_30_15/0.35)] sm:h-64" />
+        <MatchaGlass className="-mt-[clamp(0rem,1.5vw,1.5rem)] h-48 w-auto drop-shadow-[18px_30px_24px_rgb(20_30_15/0.35)] sm:h-64" />
         <p className="headline mt-2 text-center text-3xl sm:text-4xl">
           Pick one
           <br />
@@ -129,7 +129,7 @@ function SpotlightCard({
           </a>
         )}
       </div>
-      <h3 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+      <h3 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
         {cafe.name}
       </h3>
       <p className="mb-5 mt-2 line-clamp-3 text-lg leading-snug opacity-90">
@@ -138,7 +138,7 @@ function SpotlightCard({
       <div
         className={`mt-auto flex items-center justify-between gap-3 border-t pt-4 ${active ? "border-[#1e4620]/15" : "border-white/25"}`}
       >
-        <span className="font-display text-xl font-bold">
+        <span className="font-sans text-xl font-semibold">
           {cafe.neighborhood}
         </span>
         {active ? (

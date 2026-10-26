@@ -18,7 +18,7 @@ export function NavLinks({ pathname = null }: { pathname?: string | null }) {
         key={href}
         href={href}
         aria-current={active ? "page" : undefined}
-        className={`rounded-full px-4 py-1.5 font-display text-lg font-bold transition ${
+        className={`rounded-full px-4 py-1.5 font-sans text-lg font-semibold transition ${
           active ? "bg-matcha text-cream" : "bg-card/60 text-ink hover:bg-card"
         }`}
       >

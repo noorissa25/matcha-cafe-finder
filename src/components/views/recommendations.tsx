@@ -15,7 +15,7 @@ const TABS: Array<{ value: Focus; label: string }> = [
 export function RecommendIntro() {
   return (
     <section className="space-y-4 text-center">
-      <h1 className="font-display text-[clamp(3.25rem,9vw,6.5rem)] font-extrabold leading-[0.88] tracking-tight text-balance">
+      <h1 className="font-display text-[clamp(3.25rem,9vw,6.5rem)] font-semibold leading-[0.95] tracking-tight text-balance">
         What should
         <br />I try <span className="text-leaf">next?</span>
       </h1>
@@ -42,7 +42,7 @@ export function RecommendationsView({ result, note }: { result: RecommendationRe
             href={tab.value === "both" ? "/recommend" : `/recommend?focus=${tab.value}`}
             scroll={false}
             aria-current={tab.value === focus ? "page" : undefined}
-            className={`rounded-full px-5 py-1.5 font-display text-xl font-bold transition ${
+            className={`rounded-full px-5 py-1.5 font-sans text-xl font-semibold transition ${
               tab.value === focus ? "bg-matcha text-cream" : "bg-card text-ink hover:bg-matcha-soft"
             }`}
           >
@@ -65,7 +65,7 @@ export function RecommendationsView({ result, note }: { result: RecommendationRe
         <ol className="space-y-4">
           {result.recommendations.map((rec, i) => (
             <li key={rec.cafe.id} className="flex gap-4 rounded-[28px] bg-card p-5 sm:gap-6 sm:p-7">
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-sage font-display text-3xl font-extrabold tabular-nums sm:size-16 sm:text-4xl">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-sage font-display text-3xl font-semibold tabular-nums sm:size-16 sm:text-4xl">
                 {i + 1}
               </span>
               <div className="min-w-0 flex-1 space-y-2">
@@ -103,7 +103,7 @@ function ScoreBar({ score }: { score: number }) {
   // Scores are cosine similarity plus a small neighborhood term, so roughly -1..1.
   const pct = Math.round(Math.max(0, Math.min(1, score)) * 100);
   return (
-    <span className="flex items-center gap-2 font-display text-lg font-bold text-muted" title={`Score ${score.toFixed(2)}`}>
+    <span className="flex items-center gap-2 font-sans text-lg font-semibold text-muted" title={`Score ${score.toFixed(2)}`}>
       <span className="h-2.5 w-24 overflow-hidden rounded-full bg-cream">
         <span className="block h-full rounded-full bg-matcha" style={{ width: `${pct}%` }} />
       </span>

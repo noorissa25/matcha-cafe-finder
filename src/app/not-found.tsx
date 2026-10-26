@@ -9,7 +9,7 @@ export default function NotFound() {
       <p className="text-xl font-medium">That page or café does not exist.</p>
       <Link
         href="/"
-        className="inline-block rounded-full bg-matcha px-6 py-2 font-display text-xl font-bold text-cream hover:opacity-90"
+        className="inline-block rounded-full bg-matcha px-6 py-2 font-sans text-xl font-semibold text-cream hover:opacity-90"
       >
         Back to your cafés
       </Link>

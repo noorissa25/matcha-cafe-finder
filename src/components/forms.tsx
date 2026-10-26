@@ -23,7 +23,7 @@ function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="font-display text-lg font-bold">{label}</span>
+      <span className="font-sans text-lg font-semibold">{label}</span>
       {children}
       {hint && !error && <span className="block text-sm text-muted">{hint}</span>}
       {error && <span className="block text-sm font-medium text-danger">{error}</span>}
@@ -36,7 +36,7 @@ function Submit({ pending, children }: { pending: boolean; children: React.React
     <button
       type="submit"
       disabled={pending}
-      className="rounded-full bg-matcha px-6 py-2 font-display text-xl font-bold text-cream transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-full bg-matcha px-6 py-2 font-sans text-xl font-semibold text-cream transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {pending ? "Saving…" : children}
     </button>
@@ -70,7 +70,7 @@ export function CafeForm({ action: submit }: { action: FormAction }) {
           <input name="tags" defaultValue={v.tags} className={input} />
         </Field>
         <fieldset className="space-y-1.5">
-          <legend className="font-display text-lg font-bold">Serves</legend>
+          <legend className="font-sans text-lg font-semibold">Serves</legend>
           <div className="flex gap-5">
             <label className="flex items-center gap-2">
               <input type="checkbox" name="servesMatcha" defaultChecked={state.values ? v.servesMatcha === "on" : true} className="accent-matcha" /> Matcha
@@ -84,7 +84,7 @@ export function CafeForm({ action: submit }: { action: FormAction }) {
       </div>
 
       <div className="space-y-3">
-        <span className="font-display text-lg font-bold">Location</span>
+        <span className="font-sans text-lg font-semibold">Location</span>
         <LocationPicker value={point} onPick={(pickedLat, pickedLng) => {
             setLat(pickedLat.toFixed(5));
             setLng(pickedLng.toFixed(5));
@@ -153,7 +153,7 @@ export function TastingForm({
         </Field>
       </div>
       <fieldset className="space-y-1.5">
-        <legend className="font-display text-lg font-bold">Rating</legend>
+        <legend className="font-sans text-lg font-semibold">Rating</legend>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((n) => (
             <label key={n} className="cursor-pointer">

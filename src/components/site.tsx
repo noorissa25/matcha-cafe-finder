@@ -1,17 +1,13 @@
 // Page chrome shared by the full app's layout and the static demo's layout.
 
-import { Barlow, Barlow_Condensed, Caveat } from "next/font/google";
+import { Caveat, DM_Sans, Fraunces } from "next/font/google";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 import { ArrowDot } from "@/components/decor";
 import { ActiveNavLinks, NavLinks } from "@/components/nav-link";
 
-const barlow = Barlow({ variable: "--font-barlow", subsets: ["latin"], weight: ["400", "500", "600"] });
-const barlowCondensed = Barlow_Condensed({
-  variable: "--font-barlow-condensed",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
+const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"], axes: ["opsz"] });
+const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"] });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500"] });
 
 export const siteMetadata = {
@@ -36,7 +32,7 @@ export function SiteShell({ banner, children }: { banner?: ReactNode; children: 
   return (
     <html
       lang="en"
-      className={`${barlow.variable} ${barlowCondensed.variable} ${caveat.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${fraunces.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans text-[17px]">
         <a
@@ -62,7 +58,7 @@ export function SiteShell({ banner, children }: { banner?: ReactNode; children: 
               className="group ml-auto flex items-center gap-1 sm:ml-0"
             >
               <ArrowDot className="bg-card text-ink transition group-hover:bg-matcha group-hover:text-cream" />
-              <span className="rounded-full bg-card px-4 py-1.5 font-display text-lg font-bold whitespace-nowrap transition group-hover:bg-matcha group-hover:text-cream">
+              <span className="rounded-full bg-card px-4 py-1.5 font-sans text-lg font-semibold whitespace-nowrap transition group-hover:bg-matcha group-hover:text-cream">
                 Add café
               </span>
             </Link>

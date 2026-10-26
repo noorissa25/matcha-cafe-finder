@@ -11,7 +11,7 @@ import type { FormAction } from "@/lib/validation";
 
 export function BackLink() {
   return (
-    <Link href="/" className="inline-flex items-center gap-1 rounded-full bg-card px-4 py-1.5 font-display text-lg font-bold hover:bg-matcha-soft">
+    <Link href="/" className="inline-flex items-center gap-1 rounded-full bg-card px-4 py-1.5 font-sans text-lg font-semibold hover:bg-matcha-soft">
       <span aria-hidden>←</span> All cafés
     </Link>
   );
@@ -76,13 +76,13 @@ export function CafeDetailView({
                   <div className="min-w-0 flex-1 space-y-1">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                       <span
-                        className={`rounded-full px-2.5 py-0.5 font-display text-sm font-bold uppercase tracking-wide ${
+                        className={`rounded-full px-2.5 py-0.5 font-sans text-sm font-semibold uppercase tracking-wide ${
                           t.drinkType === "matcha" ? "bg-matcha-soft text-matcha" : "bg-coffee-soft text-coffee"
                         }`}
                       >
                         {t.drinkType}
                       </span>
-                      <span className="font-display text-xl font-bold">{t.drinkName}</span>
+                      <span className="font-display text-xl font-semibold">{t.drinkName}</span>
                       <Stars rating={t.rating} />
                     </div>
                     {t.notes && <p className="leading-snug">{t.notes}</p>}

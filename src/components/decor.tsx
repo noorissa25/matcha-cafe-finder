@@ -64,7 +64,7 @@ export function StatBadge({
 }) {
   return (
     <div className="flex size-24 shrink-0 flex-col items-center justify-center rounded-full bg-card text-center shadow-sm sm:size-32">
-      <span className="font-display text-4xl font-extrabold leading-none tabular-nums sm:text-5xl">
+      <span className="font-display text-4xl font-semibold leading-none tabular-nums sm:text-5xl">
         {value}
         {unit && <span className="text-xl sm:text-2xl">{unit}</span>}
       </span>
