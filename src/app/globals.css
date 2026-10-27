@@ -52,7 +52,7 @@
   --color-danger: var(--danger);
   --color-ribbon: var(--ribbon);
   --font-sans: var(--font-dm-sans);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-playfair);
   --font-script: var(--font-caveat);
 }
 
@@ -61,19 +61,13 @@ body {
   color: var(--ink);
 }
 
-/* Soft serif headlines in sentence case, like a café menu board. */
+/* Elegant serif headlines in sentence case, like a café menu board. */
 @utility headline {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 0.98;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   text-wrap: balance;
-}
-
-/* Fraunces' soft, slightly wonky shapes on every display-serif line. */
-.font-display,
-.headline {
-  font-variation-settings: "SOFT" 60, "WONK" 1;
 }
 
 :focus-visible {

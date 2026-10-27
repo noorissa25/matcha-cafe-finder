@@ -1,13 +1,13 @@
 // Page chrome shared by the full app's layout and the static demo's layout.
 
-import { Caveat, DM_Sans, Fraunces } from "next/font/google";
+import { Caveat, DM_Sans, Playfair_Display } from "next/font/google";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 import { ArrowDot } from "@/components/decor";
 import { ActiveNavLinks, NavLinks } from "@/components/nav-link";
 
 const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"], axes: ["opsz"] });
-const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"] });
+const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"] });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500"] });
 
 export const siteMetadata = {
@@ -32,7 +32,7 @@ export function SiteShell({ banner, children }: { banner?: ReactNode; children: 
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${fraunces.variable} ${caveat.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${playfair.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans text-[17px]">
         <a
